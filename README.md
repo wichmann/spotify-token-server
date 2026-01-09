@@ -23,11 +23,15 @@ could look like this:
 
     services:
       spotify-token-server:
-        build: https://github.com/wichmann/spotify-token-server.git
-        volumes:
-        - ./config.actual.py:/app/config.py
-        image: spotify-token-server
+        # build image manually from source
+        # build: https://github.com/wichmann/spotify-token-server.git
+        # image: spotify-token-server
+        image: ghcr.io/wichmann/spotify-token-server:main
         restart: always
+        ports:
+          - 5000:5000
+        volumes:
+          - ./config.actual.py:/app/config.py
         labels:
         - "traefik.enable=true"
         - "traefik.http.services.spotify-token-server.loadbalancer.server.port=5000"
